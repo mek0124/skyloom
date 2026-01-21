@@ -16,23 +16,21 @@
       </h1>
     </div>
     
-    <div class="user-container">
-      {% if user %}
-        <div class="user-title-container">
-          <img 
-            src="{{ url_for('static', filename='{{ user.icon }}') }}" 
-            alt="User Icon Here"
-            width="40"
-            height="40"
-            class="user-icon"
-          />
+    {% if user %}
+      <div class="user-container">
+        <img 
+          src="{{ url_for('static', filename='images/' + user.icon) }}" 
+          alt="User Icon Here"
+          width="40"
+          height="40"
+          class="user-icon"
+        />
 
-          <h3 class="username">
-            {{ user.username }}
-          </h3>
-        </div>
-      {% endif %}
-    </div>
+        <h3 class="username">
+          {{ user.username }}
+        </h3>
+      </div>
+    {% endif %}
 
     <div class="clock-container">
       <span class="clock-display" id="cTime"></span>

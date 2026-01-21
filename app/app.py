@@ -18,6 +18,7 @@ app = {
 
 user_dict = {
     "username": "john_doe123",
+    "icon": "icon.jpeg",
     "is_logged_in": True
 }
 

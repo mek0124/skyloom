@@ -2,7 +2,9 @@ from flask import Flask, jsonify, redirect, render_template, url_for, request
 from flask_cors import CORS
 from markupsafe import escape
 from dotenv import load_dotenv
+from datetime import datetime
 
+import requests
 import os
 
 
@@ -16,13 +18,15 @@ app = {
 
 user_dict = {
     "username": "john_doe123",
-    "is_logged_in": False
+    "is_logged_in": True
 }
 
 
 app = Flask(__name__)
 CORS(app)
 
+app.config["WEATHER_API_KEY"] = os.getenv("WEATHER_API_KEY")
+app.config["WEATHER_API_URL_BASE"] = os.getenv("WEATHER_API_URL_BASE")
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 
 @app.route('/')
@@ -59,11 +63,61 @@ def about():
             { "language": "Python", "years": "9" },
             { "language": "Java Script", "years": "7" },
             { "language": "C#", "years": "< 1" },
-            { ""}
+            { "language": "Bash", "years": "3" },
         ]
     }
 
     return render_template('about.html', dev=dev_info, app=app)
+
+@app.route("/dashboard")
+def dashboard():
+    # only hard coded address to try and get working response
+    address = "225 Wicker Rd. Cowarts, AL, USA 36321"
+    api_key = app.config["WEATHER_API_KEY"]
+
+    request_data = {
+        "key": api_key,
+        "q": address,
+        "hour": datetime.now().hour(),
+        "alerts": "yes"
+    }
+
+    current_weather = requests.get('http://127.0.0.1/daily_forecast', request_data)
+    return render_template('dashboard.html', user=user_dict, app=app)
+
+@app.route("/daily_forecast")
+def daily_forecast():
+    try:
+        response = requests.get(
+            app.config["WEATHER_API_URL_BASE"] + "/current.json",
+            )
+
+        print(response)
+        return render_template('dashboard', user=user_dict, app=app)
+    
+    except Exception as e:
+        print(f"Unknown Exception Getting Current Weather: {e}")
+        return render_template('dashboard', user=user_dict, app=app)
+
+@app.route("/weekly_forecast")
+def weekly_forecast():
+    pass
+
+@app.route("/monthly_forecast")
+def monthly_forecast():
+    pass
+
+@app.route("/yearly_forecast")
+def yearly_forecast():
+    pass
+
+@app.route("/profile")
+def profile():
+    pass
+
+@app.route("/settings")
+def settings():
+    pass
 
 if __name__ == '__main__':
     app.run(debug=True)

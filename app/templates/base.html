@@ -16,7 +16,7 @@
       {% if not user and not user.is_logged_in %}
         {% include 'components/welcome.html' %}
       {% elif user and user.is_logged_in %}
-        {% include 'dashboard.html' %}
+        {% include 'components/dashboard.html' %}
       {% endif %}
     </main>
 

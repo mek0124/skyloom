@@ -44,37 +44,39 @@
       Dashboard
     </a>
 
-    <details>
-      <summary>Forecasts</summary>
+    <div class="dropdown">
+      <div class="dropbtn">Forecasts</div>
 
-      <a 
-        href="{{ url_for('daily_forecast') }}" 
-        class="nav-link"
-      >
-        Daily
-      </a>
+      <div class="dropdown-content">
+        <a 
+          href="{{ url_for('daily_forecast') }}" 
+          class="nav-link inner-nav-link"
+        >
+          Daily
+        </a>
 
-      <a 
-        href="{{ url_for('weekly_forecast') }}" 
-        class="nav-link"
-      >
-        Weekly
-      </a>
+        <a 
+          href="{{ url_for('weekly_forecast') }}" 
+          class="nav-link inner-nav-link"
+        >
+          Weekly
+        </a>
 
-      <a 
-        href="{{ url_for('monthly_forecast') }}" 
-        class="nav-link"
-      >
-        Monthly
-      </a>
+        <a 
+          href="{{ url_for('monthly_forecast') }}" 
+          class="nav-link inner-nav-link"
+        >
+          Monthly
+        </a>
 
-      <a 
-        href="{{ url_for('yearly_forecast') }}" 
-        class="nav-link"
-      >
-        Yearly
-      </a>
-    </details>
+        <a 
+          href="{{ url_for('yearly_forecast') }}" 
+          class="nav-link inner-nav-link"
+        >
+          Yearly
+        </a>
+      </div>
+    </div>
     
     <a 
       href="{{ url_for('profile') }}" 

@@ -1,0 +1,21 @@
+.nav-bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  height: 2em;
+}
+
+.nav-link {
+  font-weight: bold;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-primary);
+  transition: all 0.3s ease-in;
+  margin-left: 1rem;
+}
+
+.nav-link:hover {
+  font-size: 1.2rem;
+}

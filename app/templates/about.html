@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" href="{{ url_for('static', filename='images/icon.jpeg') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}" />
+
+    <title>Skyloom - About</title>
+  </head>
+  <body>
+    {% include 'components/header.html' %}
+
+    <div class="about-container">
+      <div class="about-title-container">
+        <h1 class="about-title">
+          About Skyloom
+        </h1>
+      </div>
+
+      <div class="about-body-container">
+        <section class="about-section">
+          <div class="section-title-container">
+            <h3 class="section-title">
+              Section Title Here
+            </h3>
+          </div>
+
+          <div class="section-body-container">
+            <span class="section-text">
+              Section text here
+            </span>
+          </div>
+        </section>
+
+        <section class="about-section">
+          <div class="section-title-container">
+            <h3 class="section-title">
+              Section Title Here
+            </h3>
+          </div>
+
+          <div class="section-body-container">
+            <span class="section-text">
+              Section text here
+            </span>
+          </div>
+        </section>
+        
+        <section class="about-section">
+          <div class="section-title-container">
+            <h3 class="section-title">
+              Section Title Here
+            </h3>
+          </div>
+
+          <div class="section-body-container">
+            <span class="section-text">
+              Section text here
+            </span>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    {% include 'components/footer.html' %}
+  </body>
+</html>

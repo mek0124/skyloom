@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/components/dashboard.css') }}" />
+
+<div class="dashboard-container">
+  <div class="card">
+    <div class="card-title-container">
+      <h1 class="title">
+        Current Weather
+      </h1>
+    </div>
+
+    <div class="card-body-container">
+      <!--
+        display a list of cards in a row that flex-wrap like a normal dashboard.
+        
+        - each dashboard card should be able to be toggled on/off in the settings screen
+          under dashboard settings
+
+        cards:
+          - Current Weather
+            - temperature
+              - F/C is user choice
+              - update register to get user choice
+              - update settings to get user update
+            - wind speed data
+              - mph/kph is user choice
+              - update register to get user choice
+              - update settings to get user update
+            - precipitation percentage
+          - Alerts
+            - for dashboard, only show
+              - headline
+              - severity
+            - if widget is clicked
+              - open alerts screen
+              - create expandable cards that show the following in a nice layout
+                - headline
+                - msgType
+                - severity
+                - urgency
+                - areas
+                - category
+                - certainty
+                - event
+                - note
+                - effective
+                - expires
+                - desc
+                - instruction
+          - Air Quality Data
+            - carbon monoxide (ug/m3)
+            - ozone (ug/m3)
+            - nitrogen dioxide (ug/m3)
+            - sulphur dioxide (ug/m3)
+            - PM2.5 (ug/m3)
+            - PM10 (ug/m3)
+            - us-epa-index -> US- EPA Standard
+              - color code accordingly
+            - gb-defra-index
+              - color code accordingly
+          - Pollen Data
+            - display the following pollen data for the types below as info rows
+              - hazel
+              - alder
+              - birch
+              - oak
+              - grass
+              - mugwart
+              - ragweed
+            - color code accordingly
+          - Tides data
+          - update interval
+            - based off user settings
+            - 15 minute increments
+            - least amount available to choose is 15 minutes
+              - update register screen to get user choice
+              - update settings screen to get user update
+            - display refresh timer on dashboard
+          - longitude, latitude information
+            - Show
+              - longitude
+              - latitude
+              - address
+              - region
+              - country
+              - time zone name
+            - if card is clicked, opens maps.google.com with the user's long/lat passed as search values
+      -->
+    </div>
+</div>

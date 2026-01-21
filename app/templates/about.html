@@ -48,7 +48,7 @@
               Data that is stored in the database that the
               program will need to read again, like your address,
               email, phone, etc. is
-              <a href="" class="about-link">
+              <a href="https://en.wikipedia.org/wiki/Encryption" class="about-link">
                 encrypted
               </a>.
             </span>
@@ -57,7 +57,7 @@
               Data that is stored in the database that the
               program does not need to read again, like your password,
               is
-              <a href="" class="about-link">
+              <a href="https://en.wikipedia.org/wiki/Cryptographic_hash_function" class="about-link">
                 hashed
               </a>.
             </span>
@@ -72,25 +72,60 @@
           </div>
 
           <div class="section-body-container">
-            <!-- 
-              build a nice section for the developer
-              container. The dev dictionary that is
-              passed comes with a list of languages and
-              years in that language as key, value pairs
-
-              {
-                "language": "",
-                "years": "",
-              }
-
-              so build a graph or some type of chart for
-              displaying the experience of the developer
-              and create a nice link button that goes
-              to the developers repo.
-             -->
-            <span class="section-text">
-              Section text here
-            </span>
+            <div class="developer-profile">
+              <div class="dev-intro">
+                <p class="section-text">
+                  Skyloom is developed by a passionate software engineer specializing in full-stack web applications, data security, and real-time systems.
+                </p>
+              </div>
+              
+              <div class="experience-chart">
+                <div class="chart-title">Development Experience</div>
+                <div class="chart-bars">
+                  {% if dev %}
+                    {% for item in dev.experience %}
+                      <div class="chart-item">
+                        <div class="chart-label">{{ item.language }}</div>
+                        <div class="chart-bar-container">
+                          <div class="chart-bar" style="width: {{ (item.years|float / 10 * 100) if item.years|float <= 10 else 100 }}%;">
+                            <span class="chart-years">{{ item.years }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    {% endfor %}
+                  {% else %}
+                    <div class="chart-item">
+                      <div class="chart-label">Python</div>
+                      <div class="chart-bar-container">
+                        <div class="chart-bar" style="width: 80%;">
+                          <span class="chart-years">5 years</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chart-item">
+                      <div class="chart-label">JavaScript</div>
+                      <div class="chart-bar-container">
+                        <div class="chart-bar" style="width: 70%;">
+                          <span class="chart-years">4 years</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="chart-item">
+                      <div class="chart-label">HTML/CSS</div>
+                      <div class="chart-bar-container">
+                        <div class="chart-bar" style="width: 90%;">
+                          <span class="chart-years">6 years</span>
+                        </div>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+              
+              <a href="https://github.com" class="repo-link" target="_blank">
+                <span>View Developer's GitHub</span>
+              </a>
+            </div>
           </div>
         </section>
       </div>

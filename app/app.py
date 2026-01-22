@@ -4,7 +4,10 @@ from markupsafe import escape
 from dotenv import load_dotenv
 from datetime import datetime
 
+from .utils.current_weather import get_current_weather, display_response, store_response
+
 import requests
+import sys
 import os
 
 
@@ -72,18 +75,23 @@ def about():
 
 @app.route("/dashboard")
 def dashboard():
-    # only hard coded address to try and get working response
-    address = "225 Wicker Rd. Cowarts, AL, USA 36321"
-    api_key = app.config["WEATHER_API_KEY"]
-
-    request_data = {
-        "key": api_key,
-        "q": address,
-        "hour": datetime.now().hour(),
-        "alerts": "yes"
+    user_settings = {
+        "f_c": "f",
+        "mph_kph": "mph",
+        "km_mi": "mi",
+        "mb_in": "mb",
+        "alerts": True
     }
 
-    current_weather = requests.get('http://127.0.0.1/daily_forecast', request_data)
+    response = get_current_weather(user_settings["alerts"])
+
+    did_store, strg_response = store_response(response)
+
+    if not did_store:
+        print(strg_response)
+        sys.exit(1)
+
+    display_response(strg_response, user_settings)
     return render_template('dashboard.html', user=user_dict, app=app)
 
 @app.route("/daily_forecast")

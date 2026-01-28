@@ -1,24 +1,32 @@
 from PySide6.QtWidgets import QApplication
 from pathlib import Path
 
-from app.app import Skyloom
+from app.database.db import get_base, get_db, get_engine
 
 import sys
 
 
-def run():
+def run_setup():
+    pass
+
+
+def run_app():
+    pass
+
+
+def main():
     app = QApplication(sys.argv)
 
     root_dir = Path(__file__).parent
+    storage_dir = root_dir / "app" / "storage"
+    storage_dir.mkdir(parents=True, exist_ok=True)
 
-    window = Skyloom(root_dir)
-    window.setWindowTitle("Skyloom")
-    window.setMinimumWidth(800)
-    window.setMinimumHeight(600)
-    window.show()
+    get_base().metadata.create_all(bind=get_engine())
 
-    sys.exit(app.exec())
+    db = next(get_db())
+
+    any_existing_users = db
 
 
-if __name__ == '__main__':
-    run()
+if __name__ == "__main__":
+    main()

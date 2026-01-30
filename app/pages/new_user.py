@@ -67,7 +67,7 @@ class NewUser(QWidget):
                 }}
 
                 QLineEdit#form-input:focus {{
-                    background-color: {parent.color_theme['surface_glass']};
+                    background-color: {self.color_theme['surface_glass']};
                 }}
 
                 QPushButton#ready-btn {{

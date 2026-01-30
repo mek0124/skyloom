@@ -42,15 +42,25 @@ class Skyloom(MSFluentWindow):
         )
 
     def init_navigation(self):
-        if not self.user or not self.user["read_write"] or not hasattr(self.user, "settings"):
+        self.user = self.json_engine.get_user_profile()
+        
+        if not self.user or not self.user.get("read_write", False):
             self.addSubInterface(self.new_user, fi.PEOPLE, "NewUser", position=NavigationItemPosition.TOP)
+            self.switchTo(self.new_user)
         else:
             self.addSubInterface(self.profile, fi.PEOPLE, "Profile", position=NavigationItemPosition.TOP)
             self.addSubInterface(self.dashboard, fi.HOME, "Dashboard", position=NavigationItemPosition.TOP)
+            self.switchTo(self.dashboard)
 
         self.addSubInterface(self.about, fi.INFO, "About", position=NavigationItemPosition.BOTTOM)
         self.addSubInterface(self.support, fi.ADD, "Support", position=NavigationItemPosition.BOTTOM)
 
     def on_user_created(self):
+        self.user = self.json_engine.get_user_profile()
+        
+        for widget in self.findChildren(type(self.new_user)):
+            if hasattr(widget, 'objectName') and widget.objectName() in ["Dashboard", "Profile", "NewUser", "About", "Support"]:
+                self.navigationInterface.removeWidget(widget)
+        
         self.init_navigation()
-        self.switchTo(self.dashboard)
+        self.switchTo(0)

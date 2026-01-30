@@ -14,6 +14,12 @@ class Dashboard(QWidget):
         super().__init__(parent)
         self.setObjectName("Dashboard")
 
+        self.theme = parent.color_theme
+        self.color_theme = parent.color_theme
+        self.json_engine = parent.json_engine
+        self.user = parent.user
+        self.weather_engine = parent.weather_engine
+
         self.setStyleSheet(
             f"""
                 QWidget {{
@@ -40,12 +46,6 @@ class Dashboard(QWidget):
             """
         )
 
-        self.theme = parent.color_theme
-        self.color_theme = parent.color_theme
-        self.json_engine = parent.json_engine
-        self.user = parent.user
-        self.weather_engine = parent.weather_engine
-
         self.is_loading = False
         self.warnings = None
         self.current_weather = None
@@ -63,14 +63,14 @@ class Dashboard(QWidget):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(10, 10, 10, 10)
         layout.setSpacing(0)
-        layout.setAlignment(Qt.AlignLeft | Qt.AlignTop)
+        layout.setAlignment(Qt.AlignCenter)
 
         title_row = QWidget()
         title_row.setObjectName("title-row")
 
         title_row_layout = QHBoxLayout(title_row)
         title_row_layout.setContentsMargins(0, 0, 0, 0)
-        title_row_layout.setSpacing(150)
+        title_row_layout.setSpacing(0)
         title_row_layout.setAlignment(Qt.AlignCenter)
 
         title = QLabel("Weather Conditions")
@@ -93,6 +93,9 @@ class Dashboard(QWidget):
         layout.addStretch()
 
     def load_dashboard(self):
+        if self.user is None or not self.user or not hasattr(self.user, "settings"):
+            return
+        
         weather_response = self.weather_engine.get_current_weather(self.user['settings']['alerts'])
         response_display = self.weather_engine.display_response(weather_response, self.user['settings'])
 

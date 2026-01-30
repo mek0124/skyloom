@@ -7,7 +7,7 @@ import json
 class JsonEngine:
     def __init__(self, root_dir):
         self.root_dir = root_dir
-        self.config_path = self.root_dir / "core" / "storage" / "config.json"
+        self.config_path = self.root_dir / "app" / "storage" / "config.json"
 
     def create_default_json(self):
         try:

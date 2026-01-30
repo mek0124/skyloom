@@ -14,7 +14,6 @@ class NewUser(QWidget):
 
         self.color_theme = parent.color_theme
         self.json_engine = parent.json_engine
-        self.user_created = parent.user_created
         self.parent_app = parent
 
         self.setStyleSheet(
@@ -90,7 +89,7 @@ class NewUser(QWidget):
 
     def setup_ui(self):
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(0, 10, 0, 0)
+        layout.setContentsMargins(10, 10, 10, 10)
         layout.setSpacing(0)
         layout.setAlignment(Qt.AlignCenter)
 
@@ -542,10 +541,8 @@ class NewUser(QWidget):
 
         try:
             self.json_engine.create_user_profile(new_user)
+            self.parent_app.on_user_created()
             self.handle_error_success("User Created Succesfully. Reloading Application... Please Wait...", False)
-
-            self.user_created = True
-            self.parent_app.close()
 
         except Exception as e:
             print(e)

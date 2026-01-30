@@ -26,10 +26,10 @@ class SettingsTree(QWidget):
 
     def setup_ui(self):
         layout = QVBoxLayout(self)
-        layout.setContentMargsin(10, 10, 10, 10)
+        layout.setContentsMargins(10, 10, 10, 10)
         layout.setSpacing(10)
         layout.setAlignment(Qt.AlignTop | Qt.AlignCenter)
 
     def load_user_settings(self):
-        if not self.user['settings']:
-            pass
+        if not self.user:
+            return

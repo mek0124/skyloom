@@ -19,7 +19,7 @@ class WarningStrip(QWidget):
                 }}
 
                 QLabel#warning-label {{
-                    color: {self.theme['text_primary']};
+                    color: {self.color_theme['text_primary']};
                 }}
             """
         )

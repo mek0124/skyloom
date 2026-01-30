@@ -114,7 +114,7 @@ class MainDisplay(QWidget):
         feels_like_row_layout.setAlignment(Qt.AlignCenter)
 
         feels_like_label = QLabel("Feels Like")
-        feels_like_label.setobjectName("form-label")
+        feels_like_label.setObjectName("form-label")
 
         self.feels_like_display = QLabel("Loading...")
         self.feels_like_display.setAlignment(Qt.AlignRight)

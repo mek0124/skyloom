@@ -2,3 +2,5 @@ __pycache__/
 config.json
 main.db
 uv.lock
+.aidigestignore
+codebase.md

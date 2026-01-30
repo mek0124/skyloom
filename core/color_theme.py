@@ -23,7 +23,7 @@ COLOR_THEME = {
     # Status colors
     "success": "#00FF88",       # Green success
     "warning": "#FFD600",       # Yellow warning (complements green)
-    "error": "#FF3366",         # Pink error for contrast
+    "error": "#DD1B1B",         # Pink error for contrast
     # Code and special
     "code_background": "#0A0E14",
     "border": "#1C344D",

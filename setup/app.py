@@ -3,22 +3,22 @@ from qfluentwidgets import (
     setTheme, Theme, setThemeColor
 )
 
-from .pages.dashboard import Dashboard
-from .pages.profile import Profile
+from .pages.new_user import NewUser
+from .pages.about import About
+from .pages.support import Support
 
 
-class Skyloom(MSFluentWindow):
-    def __init__(self, user, color_theme, root_dir, json_engine, weather_engine):
+class SkyloomNewUser(MSFluentWindow):
+    def __init__(self, color_theme, json_engine):
         super().__init__()
 
-        self.user = user
         self.color_theme = color_theme
-        self.root_dir = root_dir
         self.json_engine = json_engine
-        self.weather_engine = weather_engine
+        self.user_created = False
 
-        self.dashboard = Dashboard(self)
-        self.profile = Profile(self)
+        self.new_user = NewUser(self)
+        self.about = About(self)
+        self.support = Support(self)
 
         self.apply_app_styles()
         self.init_navigation()
@@ -26,6 +26,7 @@ class Skyloom(MSFluentWindow):
     def apply_app_styles(self):
         setTheme(Theme.DARK)
         setThemeColor(self.color_theme['primary'])
+        
         self.setStyleSheet(
             f"""
                 QMainWindow {{
@@ -35,5 +36,6 @@ class Skyloom(MSFluentWindow):
         )
 
     def init_navigation(self):
-        self.addSubInterface(self.profile, fi.PEOPLE, "Profile")
-        self.addSubInterface(self.dashboard, fi.HOME, "Dashboard")
+        self.addSubInterface(self.new_user, fi.PEOPLE, "NewUser")
+        self.addSubInterface(self.about, fi.INFO, "About")
+        self.addSubInterface(self.support, fi.ADD, "Support")

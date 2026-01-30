@@ -5,12 +5,17 @@ from PySide6.QtWidgets import (
 
 from PySide6.QtCore import Qt
 
-from ...models.user import User
-
 
 class UserDetails(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+
+        self.user = parent.user
+        self.color_theme = parent.color_theme
+
+        self.username = None
+        self.created_at = None
+        self.updated_at = None
 
         self.setStyleSheet(
             f"""
@@ -31,48 +36,42 @@ class UserDetails(QWidget):
                     font-style: italic;
                     font-size: 14px;
                     letter-spacing: 0.2em;
-                    color: {parent.color_theme['primary']};
+                    color: {self.color_theme['primary']};
                 }}
 
                 QLabel#form-label {{
                     font-style: italic;
                     font-size: 12px;
-                    color: {parent.color_theme['text_primary']};
+                    color: {self.color_theme['text_primary']};
                 }}
 
                 QLineEdit#form-input {{
-                    border-bottom: 2px solid {parent.color_theme['primary']};
-                    color: {parent.color_theme['text_primary']};
+                    border-bottom: 2px solid {self.color_theme['primary']};
+                    color: {self.color_theme['text_primary']};
                     font-size: 12px;
                 }}
 
                 QLineEdit#form-input:hover {{
-                    background-color: {parent.color_theme['surface_glass_hover']};
+                    background-color: {self.color_theme['surface_glass_hover']};
                 }}
 
                 QLineEdit#form-input:focus {{
-                    background-color: {parent.color_theme['surface_glass']};
+                    background-color: {self.color_theme['surface_glass']};
                 }}
 
                 QPushButton#update-btn {{
-                    border: 2px solid {parent.color_theme['primary']};
-                    border-radius: {parent.color_theme['border_radius_medium']};
+                    border: 2px solid {self.color_theme['primary']};
+                    border-radius: {self.color_theme['border_radius_medium']};
                     background-color: transparent;
                     font-size: 10px;
-                    color: {parent.color_theme['text_primary']};
+                    color: {self.color_theme['text_primary']};
                 }}
 
                 QPushButton#update-btn:hover {{
-                    background-color: {parent.color_theme['surface_glass_hover']};
+                    background-color: {self.color_theme['surface_glass_hover']};
                 }}
             """
         )
-
-        self.user = parent.user
-
-        self.username = None
-        self.created_at = None
-        self.updated_at = None
 
         self.setup_ui()
         self.load_user_info()

@@ -3,13 +3,26 @@ from PySide6.QtCore import Qt, QTimer
 
 
 class WarningStrip(QWidget):
-    def __init__(self, theme, warnings, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.theme = theme
+        self.color_theme = parent.color_theme
         self.parent_layout = parent.layout()
-        self.warnings = warnings if warnings else []
+        self.warnings = parent.warnings if parent.warnings else []
         self.current_index = 0
+
+        self.setStyleSheet(
+            f"""
+                QWidget {{
+                    border: none;
+                    background-color: {self.color_theme['surface_glass']};
+                }}
+
+                QLabel#warning-label {{
+                    color: {self.theme['text_primary']};
+                }}
+            """
+        )
 
         self.setup_ui()
 
@@ -24,13 +37,7 @@ class WarningStrip(QWidget):
 
         self.warning_label = QLabel("")
         self.warning_label.setAlignment(Qt.AlignCenter)
-        self.warning_label.setStyleSheet(
-            f"""
-                QLabel {{
-                    color: {self.theme['text_primary']};
-                }}
-            """
-        )
+        self.warning_label.setObjectName("warning-label")
 
         warning_container_layout.addWidget(self.warning_label)
         self.parent_layout.addWidget(warning_container)

@@ -4,13 +4,9 @@ from PySide6.QtWidgets import (
 )
 
 from PySide6.QtCore import Qt, QTimer
-from dotenv import load_dotenv
 
 from .components.main_display import MainDisplay
 from .components.warning_strip import WarningStrip
-
-from ..utils.color_theme import COLOR_THEME as theme
-from ..utils.current_weather import get_current_weather, build_display
 
 
 class Dashboard(QWidget):
@@ -18,27 +14,50 @@ class Dashboard(QWidget):
         super().__init__(parent)
         self.setObjectName("Dashboard")
 
-        self.root_dir = parent.root_dir
+        self.setStyleSheet(
+            f"""
+                QWidget {{
+                    border: none;
+                }}
+
+                QWidget#title-row {{
+                    border: none;
+                }}
+
+                QLabel#title {{
+                    font-weight: bold;
+                    font-style: italic;
+                    font-size: 14px;
+                    color: {self.color_theme['primary']};
+                    letter-spacing: 0.3em;
+                }}
+
+                QLineEdit#form-input {{
+                    border-bottom: 2px solid {self.color_theme['primary']};
+                    color: {self.color_theme['text_primary']};
+                    font-size: 12px;
+                }}
+            """
+        )
+
         self.theme = parent.color_theme
+        self.color_theme = parent.color_theme
+        self.json_engine = parent.json_engine
+        self.user = parent.user
+        self.weather_engine = parent.weather_engine
 
         self.is_loading = False
         self.warnings = None
         self.current_weather = None
-        self.main_display = None 
-        self.user_settings = {
-            "f_c": "f",
-            "mph_kph": "mph",
-            "km_mi": "mi",
-            "mb_in": "mb"
-        }
+        self.main_display = None
         
         self.setup_ui()
-        # self.load_dashboard()
+        self.load_dashboard()
 
-        # self.timer = QTimer()
-        # self.timer.setInterval(3600)
-        # self.timer.timeout.connect(self.load_dashboard)
-        # self.timer.start()
+        self.timer = QTimer()
+        self.timer.setInterval(3600)
+        self.timer.timeout.connect(self.load_dashboard)
+        self.timer.start()
 
     def setup_ui(self):
         layout = QVBoxLayout(self)
@@ -47,7 +66,7 @@ class Dashboard(QWidget):
         layout.setAlignment(Qt.AlignLeft | Qt.AlignTop)
 
         title_row = QWidget()
-        title_row.setStyleSheet("QWidget {{ border: none; }}")
+        title_row.setObjectName("title-row")
 
         title_row_layout = QHBoxLayout(title_row)
         title_row_layout.setContentsMargins(0, 0, 0, 0)
@@ -55,44 +74,27 @@ class Dashboard(QWidget):
         title_row_layout.setAlignment(Qt.AlignCenter)
 
         title = QLabel("Weather Conditions")
-        title.setStyleSheet(
-            f"""
-                QLabel {{
-                    color: {self.theme['primary']};
-                    font-weight: bold;
-                    font-style: italic;
-                    font-size: 14px;
-                    letter-spacing: 0.3em;
-                }}
-            """
-        )
+        title.setObjectName("title")
 
         self.user_location = QLineEdit()
         self.user_location.setAlignment(Qt.AlignRight)
         self.user_location.returnPressed.connect(self.load_dashboard)
-        self.user_location.setStyleSheet(
-            f"""
-                QLabel {{
-                    color: {self.theme['text_primary']};
-                }}
-            """
-        )
+        self.user_location.setObjectName("form-input")
 
         title_row_layout.addWidget(title)
         title_row_layout.addWidget(self.user_location)
 
-        layout.addWidget(title_row)
-
-        warning_strip = WarningStrip(theme, self.warnings, self)
-        self.main_display = MainDisplay(theme, None, self)
+        warning_strip = WarningStrip(self)
+        self.main_display = MainDisplay(self)
         
+        layout.addWidget(title_row)
         layout.addWidget(warning_strip)
         layout.addWidget(self.main_display)
         layout.addStretch()
 
     def load_dashboard(self):
-        weather_response = get_current_weather()
-        response_display = build_display(weather_response,)
+        weather_response = self.weather_engine.get_current_weather(self.user['settings']['alerts'])
+        response_display = self.weather_engine.display_response(weather_response, self.user['settings'])
 
         if self.main_display:
             self.main_display.update_weather(response_display)
